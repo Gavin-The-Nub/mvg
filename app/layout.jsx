@@ -5,8 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Bleep",
-  description: "Bleep Bleep Bleep",
+  title: "MvG",
+  description: "100 men vs 1 gorilla",
 };
 
 export default function RootLayout({ children }) {
