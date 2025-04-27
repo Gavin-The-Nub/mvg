@@ -49,14 +49,15 @@ export default function Home() {
           </h1>
 
           {/* Main center image */}
-          <div className="relative w-64 h-64 mb-12">
-            <video
-              src="/gorilla.webm"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="relative z-10 w-full h-full object-contain"
+          <div className="relative w-80 h-80 mb-12">
+            {/* Glowing effect under the image */}
+
+            <Image
+              src="/gor.png"
+              alt="Main character"
+              width={1000}
+              height={1000}
+              className="relative z-10"
             />
           </div>
 

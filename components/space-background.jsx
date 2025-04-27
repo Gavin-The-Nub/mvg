@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 export const SpaceBackground = () => {
   const canvasRef = useRef(null);
-  const videoRef = useRef(null);
+  const astronautRef = useRef(null);
   const [isClient, setIsClient] = useState(false); // State to track client-side rendering
 
   useEffect(() => {
@@ -15,8 +15,7 @@ export const SpaceBackground = () => {
     if (!isClient) return; // Ensure this runs only on the client side
 
     const canvas = canvasRef.current;
-    const video = videoRef.current;
-    if (!canvas || !video) return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -31,12 +30,10 @@ export const SpaceBackground = () => {
 
     window.addEventListener("resize", setCanvasSize);
 
-    // Load video file
-    video.src = "/human.webm"; // Make sure this file is in your public folder
-    video.autoplay = true;
-    video.loop = true;
-    video.muted = true; // Mute video if needed
-    video.play();
+    // Load astronaut image only on the client side
+    const astronaut = new Image();
+    astronaut.crossOrigin = "anonymous";
+    astronaut.src = "/logo.png"; // Ensure this image is in your public folder
 
     const isMobile = window.innerWidth < 768;
 
@@ -107,7 +104,7 @@ export const SpaceBackground = () => {
         ctx.translate(x + astronautSize / 2, y + astronautSize / 2);
         ctx.rotate(angle);
         ctx.drawImage(
-          video,
+          astronaut,
           -astronautSize / 2,
           -astronautSize / 2,
           astronautSize,
@@ -167,7 +164,7 @@ export const SpaceBackground = () => {
       animationFrameId = requestAnimationFrame(animate);
     }
 
-    video.onloadeddata = () => {
+    astronaut.onload = () => {
       createShootingStar();
       animate();
     };
@@ -178,16 +175,5 @@ export const SpaceBackground = () => {
     };
   }, [isClient]); // Depend on isClient to ensure it runs on the client side
 
-  return (
-    <>
-      <canvas ref={canvasRef} className="w-full h-full" />
-      <video
-        ref={videoRef}
-        className="absolute top-0 left-0 w-full h-full object-cover opacity-0"
-        muted
-        loop
-        autoPlay
-      />
-    </>
-  );
+  return <canvas ref={canvasRef} className="w-full h-full" />;
 };
